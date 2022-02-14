@@ -1,6 +1,14 @@
 .note {
   border-radius: 4px;
-  display: block;
   margin-top: 10px;
+  width: 90%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 10px;
+}
+.note-wrapper {
   width: 60%;
 }

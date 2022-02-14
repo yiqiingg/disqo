@@ -4,13 +4,8 @@ import './Note.css';
 
 const Note = (props) => {
   const { onChange, noteContent } = props;
-  // const [inputValue, setInputValue] = useState({ title: '', body: '' });
-  // useEffect(() => {
-  //   console.log(noteContent, 'content');
-  //   setInputValue({ ...noteContent });
-  // }, [noteContent]);
   return (
-    <div>
+    <div className="note-wrapper">
       <div>
         <input
           className="note"

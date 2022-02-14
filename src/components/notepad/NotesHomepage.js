@@ -82,34 +82,46 @@ const NotesHomepage = (props) => {
 
   return (
     <div className="note-container">
+      <div className="controls">
+        <button onClick={() => setDisplay('gist')}>View Stats</button>
+        <button onClick={saveNotesToStorage} className="save">
+          Save
+        </button>
+        <button onClick={deleteNotepad} className="delete">
+          Delete
+        </button>
+      </div>
       <div>
         <p className="notepad-title">NotepadTitle</p>
         <input
+          className="notepad-input"
           placeholder="My notepad title..."
           value={notepadTitle}
           onChange={(e) => setNotepadTitle(e.target.value)}
         />
       </div>
-      <button onClick={() => setDisplay('gist')}>View Stats</button>
-      <button onClick={saveNotesToStorage}>Save</button>
-      <button onClick={deleteNotepad}>Delete</button>
+
       <div>
+        <p className="my-note">My Notes</p>
         <Note onChange={onChange} noteContent={newNote} />
-        <button onClick={addNewNoteHandler}>Add</button>
+        <button onClick={addNewNoteHandler} className="add">
+          Add
+        </button>
       </div>
       {notesList.map((note, index) => {
         console.log(note);
         return (
-          <div key={note.id}>
+          <div key={note.id} className="note-list">
             <Note
+              className="note-component"
               key={note.id + 1}
               onChange={(content, type) =>
                 editNoteHandler(index, content, type)
               }
               noteContent={note}
             />
-            ;
             <button
+              className="delete"
               onClick={() => {
                 console.log('begin deletion', index);
                 deleteNoteHandler(index);
