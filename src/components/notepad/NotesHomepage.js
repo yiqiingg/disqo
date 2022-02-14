@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './NotesHomepage.css';
 import Note from './Note.js';
 
-const NotesHomepage = () => {
+const NotesHomepage = (props) => {
+  const { setDisplay } = props;
   const [notepadTitle, setNotepadTitle] = useState(
     localStorage.getItem('notepadTitle')
       ? localStorage.getItem('notepadTitle')
@@ -62,6 +63,23 @@ const NotesHomepage = () => {
     setNotesList(editedNote);
   };
 
+  const saveNotesToStorage = () => {
+    localStorage.setItem('notes', JSON.stringify(notesList));
+    localStorage.setItem('notepadTitle', notepadTitle);
+  };
+
+  const deleteNotepad = () => {
+    localStorage.removeItem('notes');
+    localStorage.removeItem('notepadTitle');
+    setNewNote({
+      id: Math.random(),
+      title: '',
+      body: '',
+    });
+    setNotepadTitle('');
+    setNotesList([]);
+  };
+
   return (
     <div className="note-container">
       <div>
@@ -69,12 +87,12 @@ const NotesHomepage = () => {
         <input
           placeholder="My notepad title..."
           value={notepadTitle}
-          onChange={setNotepadTitle}
+          onChange={(e) => setNotepadTitle(e.target.value)}
         />
       </div>
-      <button>View Stats</button>
-      <button>Save</button>
-      <button>Delete</button>
+      <button onClick={() => setDisplay('gist')}>View Stats</button>
+      <button onClick={saveNotesToStorage}>Save</button>
+      <button onClick={deleteNotepad}>Delete</button>
       <div>
         <Note onChange={onChange} noteContent={newNote} />
         <button onClick={addNewNoteHandler}>Add</button>
