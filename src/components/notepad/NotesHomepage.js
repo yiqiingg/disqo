@@ -9,19 +9,24 @@ const NotesHomepage = () => {
       ? localStorage.getItem('notepadTitle')
       : ''
   );
+
   const [newNote, setNewNote] = useState({
     id: Math.random(),
     title: '',
     body: '',
   });
+
   const [notesList, setNotesList] = useState(
     localStorage.getItem('notes')
       ? JSON.parse(localStorage.getItem('notes'))
       : []
   );
+
   useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notesList));
-  }, [notesList]);
+    console.log('notes updated', notesList);
+    // localStorage.setItem('notes', JSON.stringify(notesList));
+  }, [notesList, setNotesList]);
+
   const onChange = (content, location) => {
     console.log(content, location);
     if (location === 'title') {
@@ -42,11 +47,6 @@ const NotesHomepage = () => {
       setNotesList([...notesList, { ...newNote }]);
       setNewNote({ id: Math.random(), title: '', body: '' });
     }
-    // else {
-    //   setNotesList([...notesList, { ...newNote }]);
-    //   setNewNote({ title: '', body: '' });
-    //   setNewNote({ id: Math.random(), title: '', body: '' });
-    // }
     console.log(localStorage.getItem('notes'));
   };
 
@@ -54,6 +54,14 @@ const NotesHomepage = () => {
     setNotesList(notesList.filter((note, noteIndex) => noteIndex != index));
     console.log(notesList);
   };
+
+  const editNoteHandler = (index, content, type) => {
+    let editedNote = [...notesList];
+    editedNote[index][type] = content;
+    console.log(editedNote);
+    setNotesList(editedNote);
+  };
+
   return (
     <div className="note-container">
       <div>
@@ -64,14 +72,25 @@ const NotesHomepage = () => {
           onChange={setNotepadTitle}
         />
       </div>
+      <button>View Stats</button>
+      <button>Save</button>
+      <button>Delete</button>
       <div>
         <Note onChange={onChange} noteContent={newNote} />
         <button onClick={addNewNoteHandler}>Add</button>
       </div>
       {notesList.map((note, index) => {
+        console.log(note);
         return (
           <div key={note.id}>
-            <Note onChange={onChange} noteContent={note} />;
+            <Note
+              key={note.id + 1}
+              onChange={(content, type) =>
+                editNoteHandler(index, content, type)
+              }
+              noteContent={note}
+            />
+            ;
             <button
               onClick={() => {
                 console.log('begin deletion', index);

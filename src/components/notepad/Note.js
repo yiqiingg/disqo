@@ -4,10 +4,11 @@ import './Note.css';
 
 const Note = (props) => {
   const { onChange, noteContent } = props;
-  const [inputValue, setInputValue] = useState({});
-  useEffect(() => {
-    setInputValue({ ...noteContent });
-  }, [noteContent]);
+  // const [inputValue, setInputValue] = useState({ title: '', body: '' });
+  // useEffect(() => {
+  //   console.log(noteContent, 'content');
+  //   setInputValue({ ...noteContent });
+  // }, [noteContent]);
   return (
     <div>
       <div>
@@ -19,7 +20,7 @@ const Note = (props) => {
           }}
           maxLength={255}
           minLength={1}
-          value={inputValue.title}
+          value={noteContent.title}
         />
         <textarea
           onChange={(e) => onChange(e.target.value, 'body')}
